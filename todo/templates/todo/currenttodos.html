@@ -1,4 +1,12 @@
 {% extends 'todo/base.html' %}
 {% block content %}
-Current
+    <ul>
+    {% for item in todos %}
+        <li>{% if item.important %}<b>{% endif %}{{ item.title }}{% if item.important %}</b>{% endif %}
+            {% if item.memo %} - {{ item.memo }}{% endif %}
+        </li>
+        <li>{{ item.created }}</li>
+        <br>
+    {% endfor %}
+</ul>
 {% endblock %}
