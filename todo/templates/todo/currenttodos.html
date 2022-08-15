@@ -2,9 +2,11 @@
 {% block content %}
     <ul>
     {% for item in todos %}
+        <a href="{% url 'viewtodo'  item.id %}">
         <li>{% if item.important %}<b>{% endif %}{{ item.title }}{% if item.important %}</b>{% endif %}
             {% if item.memo %} - {{ item.memo }}{% endif %}
         </li>
+        </a>
         <li>{{ item.created }}</li>
         <br>
     {% endfor %}
