@@ -1,14 +1,32 @@
 {% extends 'todo/base.html' %}
+{% block title %} Current Todos {% endblock %}
 {% block content %}
-    <ul>
-    {% for item in todos %}
-        <a href="{% url 'viewtodo'  item.id %}">
-        <li>{% if item.important %}<b>{% endif %}{{ item.title }}{% if item.important %}</b>{% endif %}
-            {% if item.memo %} - {{ item.memo }}{% endif %}
-        </li>
-        </a>
-        <li>{{ item.created }}</li>
-        <br>
-    {% endfor %}
-</ul>
+    {% if todos %}
+    <div class="list-group">
+
+    <ol class="list-group list-group-numbered">
+  {% for item in todos %}
+
+      <li class="list-group-item d-flex justify-content-between align-items-start {% if item.important %}list-group-item-warning {% endif %}">
+
+      <div class="ms-2 me-auto">
+      <a href="{% url 'viewtodo'  item.id %}" style="color: black;text-decoration: none">
+      <div class="fw-bold opacity-75">{{ item.title|truncatechars:100 }}</div>
+    {% if item.memo %}  {{ item.memo|truncatechars:110 }}{% endif %}
+      </a>
+      </div>
+    <small>{{ item.created|date:'j M Y H:i' }}</small>
+
+  </li>
+
+  {% endfor %}
+</ol>
+
+
+    </div>
+    {% else %}
+    <div style="text-align: center">
+        <h1>There are no current Todos</h1>
+        </div>
+    {% endif %}
 {% endblock %}

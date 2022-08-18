@@ -1,10 +1,39 @@
 {% extends 'todo/base.html' %}
+{% block title %} Sign Up {% endblock %}
 {% block content %}
-<h1>Sign Up</h1>
-<h2>{{ error }}</h2>
-<form method="post">
-    {% csrf_token %}
-{{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
+    <h1 style="text-align: center;">Sign Up</h1>
+    <form method="post" style="text-align: center;">
+        {% csrf_token %}
+        <div>
+            <div class="form mt-2" style="display: inline-block; width: 400px;">
+                <div>
+                    <h5>Username</h5>
+                    <input class="form-control wide" style="height: 40px; font-size: 20px" type="text" autocomplete="off" name="username" maxlength="150" autocapitalize="none" autofocus="" required="" id="id_username">
+                    {% if error == "That Username has alredy been taken" %}
+                        <div class="helptext" style="color: #a52a2a">That Username has alredy been taken</div>
+                    {% endif %}
+                </div>
+
+                <br>
+            <div>
+                <h5>Password</h5>
+                <input class="form-control"  style="height: 40px" type="password" autocomplete="off" name="password1" required="" id="id_password1">
+            </div>
+            {% if error == 'length' %}
+                    <div class="helptext"  style="color: red;">Your password must contain at least 6 characters.</div>
+                    {% else %}
+                    <div class="helptext">Your password must contain at least 6 characters.</div>
+                {% endif %}
+                <br>
+            <div>
+                <h5>Password confirmation</h5>
+                <input class="form-control" style="height: 40px" type="password" autocomplete="off" name="password2" required="" id="id_password2">
+                {% if error == "Passwords did not match" %}
+                    <div class="helptext" style="color: #a52a2a">Passwords did not match</div>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-success btn-lg mt-2" type="submit">Sign Up</button>
+    </form>
 {% endblock %}

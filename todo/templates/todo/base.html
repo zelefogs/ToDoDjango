@@ -1,19 +1,52 @@
-{% if user.is_authenticated %}
-    Logged In as {{ user.username }}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {% endblock %}</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'todo/base.css' %}">
 
-    <a href="{% url 'createtodo' %}">Create</a>
-    <a href="{% url 'currenttodos' %}">Current</a>
-    <a href="{% url 'completedtodos' %}">Completed</a>
-
-    <form action="{% url 'logoutuser' %}" method="POST">
+            <link rel="icon" type="image/png" href="{% static "portfolio/logo.png" %}">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+  <img src="{% static "portfolio/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Zelefog's Logo">
+    <a class="navbar-brand" href="{% url 'home' %}">Todos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="{% url 'createtodo' %}">Create</a>
+        <a class="nav-link active" href="{% url 'currenttodos' %}">Current</a>
+        <a class="nav-link active" href="{% url 'completedtodos' %}">Completed</a>
+      </div>
+    </div>
+      {% if user.is_authenticated %}
+      <div class="d-flex me-2">
+          <span class="navbar-text me-2">
+          Logged In as {{ user.username }}
+          </span>
+            <form action="{% url 'logoutuser' %}" method="POST">
     {% csrf_token %}
-    <button type="submit">Logout</button>
+    <button type="submit" class="btn btn-outline-success">Logout</button>
     </form>
-{% else %}
-    <a href="{% url 'signupuser' %}">Sign Up</a>
-    <a href="{% url 'loginuser' %}">Login</a>
+      {% else %}
+          <button type="submit" class="btn btn-outline-success me-2"><a class="nav-link active me-2" href="{% url 'loginuser' %}">Login</a></button>
+          <button type="submit" class="btn btn-outline-success me-2"><a class="nav-link active " href="{% url 'signupuser' %}">Sign Up</a></button>
 
-{% endif %}
-<br>
-<br>
-{% block content %}{% endblock %}
+          {% endif %}
+      </div>
+  </div>
+</nav>
+  <body>
+{% block content %}
+
+{% endblock %}
+  </body>
+</html>
